@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phan Van Quy</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script> -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h1>IoT Dashboard</h1>
+            </div>
+            <ul class="sidebar-menu">
+                <li><button class="nav-button active" data-nav="home">Home</button></li>
+                <li><button class="nav-button" data-nav="datasensor">Data Sensor</button></li>
+                <li><button class="nav-button" data-nav="devices">Devices</button></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="home-content" class="content active">
+                <div class="metric-cards">
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Temperature</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="temperature">--°C</div>
+                        </div>
+                    </div>
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Humidity</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="humidity">--%</div>
+                        </div>
+                    </div>
+                    <div class="card metric-card">
+                        <div class="card-header">
+                            <h3>Light</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="metric-value" id="light">-- lux</div>
+                        </div>
+                    </div>
+                    <div class="card led-control-card">
+                        <div class="card-header">
+                            <h3>LED Controls</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="led-controls">
+                                <div class="led-control">
+                                    <span>LED1</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="led1">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="led-control">
+                                    <span>LED2</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="led2">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <div class="led-control">
+                                    <span>LED3</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="led3">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h3>Sensor Data Over Time</h3>
+                    </div>
+                    <div class="card-content">
+                        <canvas id="sensorChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card warning-card">
+                    <div class="card-header">
+                        <h3>Warning Light</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="warning-light">
+                            <div class="warning-indicator" id="warningIndicator"></div>
+                            <div class="warning-text">
+                                <p id="warningStatus">Light Level Normal</p>
+                                <p id="warningDescription">Light level is within normal range</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="datasensor-content" class="content">
+                <div class="card sensor-data-card">
+                    <div class="card-header">
+                        <h3>Sensor Data History</h3>
+                    </div>
+                    <div class="card-content">
+                        <table class="sensor-data-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Temperature (°C)</th>
+                                    <th>Humidity (%)</th>
+                                    <th>Light (lux)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sensorDataBody">
+                                <!-- Sensor data will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="devices-content" class="content">
+                <div class="card led-history-card">
+                    <div class="card-header">
+                        <h3>LED Control History</h3>
+                    </div>
+                    <div class="card-content">
+                        <table class="led-history-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Device</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ledHistoryBody">
+                                <!-- LED history will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
